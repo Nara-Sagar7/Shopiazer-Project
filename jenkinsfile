@@ -1,21 +1,18 @@
-node {
-    stage('VCS') {
-      git 'https://github.com/Nara-Sagar7/Shopiazer-Project.git'
+node   {
+    stage('vcs') {
+       git 'https://github.com/Nara-Sagar7/Shopiazer-Project.git'
     }
-    
-   stage('Build') {
-      sh 'mvn package'
-    }
+   
+    stage('build') {
+       sh'mvn package'
+    }   
+   
     stage('archive') {
-      // This step should not normally be used in your script. Consult the inline help for details.
-         archive 'sm-core/target/*.jar'
+       archive 'target/*.jar'
     }
-    
-    stage('Junit'){
-        
-       junit 'sm-core/target/surefire-reports/*.xml'
-        
+   
+    stage('junit') {
+       junit 'target/surefire-reports/*.xml'
     }
-    
-    
- }
+   
+}
