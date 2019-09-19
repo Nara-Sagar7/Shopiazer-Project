@@ -1,18 +1,16 @@
-node   {
+node {
     stage('vcs') {
-       git 'https://github.com/Nara-Sagar7/Shopiazer-Project.git'
-    }
+      git 'https://github.com/Nara-Sagar7/Shopiazer-Project.git'
+   }
    
-    stage('build') {
-       sh'mvn package'
-    }   
+    stage('Build') {
+      sh'mvn package'
+   }
    
-    stage('archive') {
-       archive 'target/*.jar'
-    }
-   
-    stage('junit') {
-       junit 'target/surefire-reports/*.xml'
-    }
+    stage('QA Gate') {
+      withSonarQubeEnv('sonar'){
+          sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+      }
+   }
    
 }
